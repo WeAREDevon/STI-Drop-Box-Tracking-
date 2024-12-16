@@ -38,13 +38,11 @@ st.header("Visualizations")
 
 # Test Result Distribution
 st.subheader("Test Result Distribution")
-test_result_fig = px.bar(
-    data["Test Result"].value_counts().reset_index(),
-    x="index",
-    y="Test Result",
-    labels={"index": "Test Result", "Test Result": "Count"},
+test_result_fig = px.pie(
+    data_frame=data,
+    names="Test Result",
     title="Test Result Distribution",
-    text_auto=True
+    hole=0.4
 )
 st.plotly_chart(test_result_fig)
 
