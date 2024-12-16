@@ -25,14 +25,13 @@ data.columns = [
 data["Date_of_Sample_Collection"] = pd.to_datetime(data["Date_of_Sample_Collection"], errors="coerce")
 data["Treated"] = data["Treated"].astype(str)
 
-# Visualization: Test Results by Location
-st.header("Test Results by Location")
+# Visualization: Test Results Distribution
+st.header("Test Results Distribution")
 test_results_chart = px.histogram(
     data, 
-    x="Location", 
-    color="Test_Result", 
-    title="Distribution of Test Results by Location",
-    barmode="group"
+    x="Test_Result", 
+    title="Distribution of Test Results",
+    text_auto=True
 )
 st.plotly_chart(test_results_chart)
 
@@ -40,24 +39,15 @@ st.plotly_chart(test_results_chart)
 st.header("Test Results Over Time")
 if not data["Date_of_Sample_Collection"].isnull().all():
     test_results_time_chart = px.line(
-        data,
+        data.groupby("Date_of_Sample_Collection").size().reset_index(name="Count"),
         x="Date_of_Sample_Collection",
-        y=data.groupby("Date_of_Sample_Collection")["Test_Result"].transform("count"),
+        y="Count",
         title="Test Results Over Time",
         markers=True
     )
     st.plotly_chart(test_results_time_chart)
 else:
     st.write("No valid dates available for visualization.")
-
-# Visualization: Treated vs EPT
-st.header("Treated vs EPT")
-treated_ept_chart = px.sunburst(
-    data,
-    path=["Treated", "EPT"],
-    title="Treated and EPT Status Distribution"
-)
-st.plotly_chart(treated_ept_chart)
 
 # Ending Note
 st.write("Thank you for using the dashboard!")
