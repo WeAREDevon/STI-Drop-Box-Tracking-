@@ -46,13 +46,13 @@ test_result_fig = px.pie(
 )
 st.plotly_chart(test_result_fig)
 
-# Treatment Status - Bar Chart
+# Treatment Status Distribution - Bar Chart
 st.subheader("Treatment Status Distribution")
+treatment_df = data["Treated"].value_counts().rename_axis("Treatment Status").reset_index(name="Count")
 treatment_fig = px.bar(
-    data["Treated"].value_counts().reset_index(),
-    x="index",
-    y="Treated",
-    labels={"index": "Treatment Status", "Treated": "Count"},
+    treatment_df,
+    x="Treatment Status",
+    y="Count",
     title="Treatment Status Distribution",
     text_auto=True
 )
@@ -60,11 +60,11 @@ st.plotly_chart(treatment_fig)
 
 # Location-Based Trends - Bar Chart
 st.subheader("Sample Collection by Location")
+location_df = data["Location"].value_counts().rename_axis("Location").reset_index(name="Count")
 location_fig = px.bar(
-    data["Location"].value_counts().reset_index(),
-    x="index",
-    y="Location",
-    labels={"index": "Location", "Location": "Count"},
+    location_df,
+    x="Location",
+    y="Count",
     title="Sample Collection by Location",
     text_auto=True
 )
