@@ -27,11 +27,7 @@ data["Test Result"] = data["Test Result"].fillna("Unknown")
 data["Treated"] = data["Treated"].map({"True": "Treated", "False": "Not Treated"}).fillna("Unknown")
 data["EPT"] = data["EPT"].map({"True": "EPT Provided", "False": "No EPT"}).fillna("Unknown")
 
-# Metrics Summary
-st.header("Metrics Summary")
-st.metric("Total Records", len(data))
-st.metric("Positive Results", (data["Test Result"] == "Positive").sum())
-st.metric("Negative Results", (data["Test Result"] == "Negative").sum())
+
 
 # Visualizations Section
 st.header("Visualizations")
