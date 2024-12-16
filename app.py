@@ -23,23 +23,7 @@ data.columns = [
 
 # Preprocessing
 data["Date_of_Sample_Collection"] = pd.to_datetime(data["Date_of_Sample_Collection"], errors="coerce")
-data["Treated"] = data["Treated"].astype(str)  # Convert to string for visualization clarity
-
-# Sidebar Filters
-st.sidebar.header("Filters")
-selected_location = st.sidebar.multiselect("Select Location", data["Location"].unique())
-selected_result = st.sidebar.multiselect("Select Test Result", data["Test_Result"].unique())
-
-# Filter Data
-if selected_location:
-    data = data[data["Location"].isin(selected_location)]
-if selected_result:
-    data = data[data["Test_Result"].isin(selected_result)]
-
-# Key Statistics
-st.header("Key Statistics")
-st.write(f"Total Records: {data.shape[0]}")
-st.write(data.describe(include="all"))
+data["Treated"] = data["Treated"].astype(str)
 
 # Visualization: Test Results by Location
 st.header("Test Results by Location")
