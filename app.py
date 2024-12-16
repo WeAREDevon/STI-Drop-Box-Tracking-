@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
+import plotly.express as px
 
 # Streamlit Title
 st.title("Google Form Responses Dashboard")
@@ -38,33 +38,36 @@ st.header("Visualizations")
 
 # Test Result Distribution
 st.subheader("Test Result Distribution")
-test_result_counts = data["Test Result"].value_counts()
-
-fig, ax = plt.subplots()
-test_result_counts.plot(kind="bar", ax=ax)
-ax.set_title("Test Result Distribution")
-ax.set_xlabel("Test Result")
-ax.set_ylabel("Frequency")
-st.pyplot(fig)
+test_result_fig = px.bar(
+    data["Test Result"].value_counts().reset_index(),
+    x="index",
+    y="Test Result",
+    labels={"index": "Test Result", "Test Result": "Count"},
+    title="Test Result Distribution",
+    text_auto=True
+)
+st.plotly_chart(test_result_fig)
 
 # Treatment Status Distribution
 st.subheader("Treatment Status Distribution")
-treatment_counts = data["Treated"].value_counts()
-
-fig, ax = plt.subplots()
-treatment_counts.plot(kind="bar", color="orange", ax=ax)
-ax.set_title("Treatment Status Distribution")
-ax.set_xlabel("Treatment Status")
-ax.set_ylabel("Frequency")
-st.pyplot(fig)
+treatment_fig = px.bar(
+    data["Treated"].value_counts().reset_index(),
+    x="index",
+    y="Treated",
+    labels={"index": "Treatment Status", "Treated": "Count"},
+    title="Treatment Status Distribution",
+    text_auto=True
+)
+st.plotly_chart(treatment_fig)
 
 # Location-based Trends
 st.subheader("Sample Collection by Location")
-location_counts = data["Location"].value_counts()
-
-fig, ax = plt.subplots(figsize=(10, 6))
-location_counts.plot(kind="bar", color="green", ax=ax)
-ax.set_title("Sample Collection by Location")
-ax.set_xlabel("Location")
-ax.set_ylabel("Frequency")
-st.pyplot(fig)
+location_fig = px.bar(
+    data["Location"].value_counts().reset_index(),
+    x="index",
+    y="Location",
+    labels={"index": "Location", "Location": "Count"},
+    title="Sample Collection by Location",
+    text_auto=True
+)
+st.plotly_chart(location_fig)
